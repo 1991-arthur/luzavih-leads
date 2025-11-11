@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fale Conosco via WhatsApp</title>
     
-    <!-- Google Tag Manager -->
+	<!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -164,6 +164,7 @@
     <noscript><iframe src="https://qmjzjjyu.sag.stape.io/ns.html?id=GTM-MZT4DCTR"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    
     <div class="container">
         <div class="logo">
             <svg viewBox="0 0 48 48">
@@ -198,17 +199,20 @@
     </div>
 
     <script>
+        // Inicializar dataLayer
+        window.dataLayer = window.dataLayer || [];
+        
         // CONFIGURAÇÕES - ALTERE AQUI
         const CONFIG = {
             // Cole aqui a URL do seu Google Apps Script
-            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyrFlU25VeJAC8Zm_tDQdJxjMntAUfKnz7qJJqpgrnkMSeKqFrhIDDBS15a5aOPHAQJ/exec',
+            GOOGLE_SCRIPT_URL: 'COLE_AQUI_A_URL_DO_GOOGLE_SCRIPT',
             
             // Cole aqui o número do WhatsApp (apenas números, com DDI e DDD)
             // Exemplo: 5511999999999
-            WHATSAPP_NUMBER: '554792586911',
+            WHATSAPP_NUMBER: '5511999999999',
             
             // Mensagem que será enviada no WhatsApp
-            WHATSAPP_MESSAGE: 'Olá! Adorei o conteúdo e gostaria de mais informações.'
+            WHATSAPP_MESSAGE: 'Olá! Vim através do site e gostaria de mais informações.'
         };
 
         // Função para formatar telefone
@@ -234,6 +238,28 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('fbclid') || '';
         }
+        
+        // Capturar FBC (Facebook Click ID cookie)
+        function getFBC() {
+            const fbclid = getFBCLID();
+            if (fbclid) {
+                return 'fb.1.' + Date.now() + '.' + fbclid;
+            }
+            return '';
+        }
+        
+        // Capturar FBP (Facebook Browser ID cookie)
+        function getFBP() {
+            const match = document.cookie.match(/_fbp=([^;]+)/);
+            return match ? match[1] : '';
+        }
+
+        // Enviar evento PageView para GTM
+        window.dataLayer.push({
+            'event': 'page_view',
+            'page_title': document.title,
+            'page_location': window.location.href
+        });
 
         // Validar formulário
         function validateForm(nome, telefone) {
@@ -316,6 +342,28 @@
             };
             
             await sendToGoogleSheets(data);
+            
+            // Gerar Event ID único para deduplicação
+            const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            // Enviar evento de conversão para GTM
+            window.dataLayer.push({
+                'event': 'lead_form_submit',
+                'event_id': eventId,
+                'user_data': {
+                    'email_address': '', // Não temos email
+                    'phone_number': telefone.replace(/\D/g, ''),
+                    'address': {
+                        'first_name': nome.split(' ')[0],
+                        'last_name': nome.split(' ').slice(1).join(' ')
+                    }
+                },
+                'fbclid': fbclid,
+                'fbc': getFBC(),
+                'fbp': getFBP(),
+                'lead_name': nome,
+                'lead_phone': telefone
+            });
             
             // Aguardar 500ms e redirecionar
             setTimeout(() => {
