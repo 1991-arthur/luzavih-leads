@@ -1,375 +1,440 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fale Conosco via WhatsApp</title>
-    
-	<!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://gtm-server-side-render.onrender.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MZT4DCTR');</script>
-    <!-- End Google Tag Manager -->
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luzavih ✨</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #128C7E 0%, #075E54 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://gtm-server-side-render.onrender.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MZT4DCTR');
+  </script>
+  <!-- End Google Tag Manager -->
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            max-width: 400px;
-            width: 100%;
-            padding: 40px 30px;
-            animation: slideUp 0.5s ease-out;
-        }
+  <style>
+    :root {
+      --bg-color: #f7f1e8;
+      --text-color: #444;
+      --accent: #c7a45d;
+      --accent-dark: #a78a50;
+      --font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --error: #e74c3c;
+    }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        .logo svg {
-            width: 80px;
-            height: 80px;
-            fill: #25D366;
-        }
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
 
-        h1 {
-            text-align: center;
-            color: #075E54;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
+    .wrapper {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.2rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
 
-        p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
+    .wrapper::before {
+      content: '';
+      position: absolute;
+      width: 160%;
+      height: 160%;
+      background: radial-gradient(circle at top, rgba(199,164,93,0.15), transparent 60%);
+      top: -40%;
+      left: -30%;
+      z-index: -1;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    img.logo {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.06);
+      object-fit: cover;
+      background: #fdf7ef;
+    }
 
-        label {
-            display: block;
-            color: #075E54;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
+    h1 {
+      font-weight: 600;
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
 
-        input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            outline: none;
-        }
+    p.desc {
+      font-size: 0.95rem;
+      margin-bottom: 1.6rem;
+      color: #666;
+    }
 
-        input:focus {
-            border-color: #25D366;
-            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
-        }
+    form {
+      text-align: left;
+      margin-top: 0.5rem;
+    }
 
-        button {
-            width: 100%;
-            padding: 16px;
-            background: #25D366;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
+    .form-group {
+      margin-bottom: 1rem;
+    }
 
-        button:hover {
-            background: #20BA5A;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);
-        }
+    label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 0.35rem;
+    }
 
-        button:active {
-            transform: translateY(0);
-        }
+    input,
+    select {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border-radius: 10px;
+      border: 1.8px solid #e0e0e0;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
+      background-color: #faf7f1;
+    }
 
-        button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
+    input:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(199, 164, 93, 0.18);
+      background-color: #fffdf8;
+    }
 
-        .error {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: 5px;
-            display: none;
-        }
+    .error {
+      color: var(--error);
+      font-size: 0.78rem;
+      margin-top: 0.2rem;
+      display: none;
+    }
 
-        .loading {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s linear infinite;
-        }
+    button {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      margin-top: 0.4rem;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.98rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.25s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    button:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .loading {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.4);
+      border-top-color: #fff;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    footer {
+      font-size: 0.78rem;
+      color: #999;
+      margin-top: 1.6rem;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://gtm-server-side-render.onrender.com/ns.html?id=GTM-MZT4DCTR"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    
-    <div class="container">
-        <div class="logo">
-            <svg viewBox="0 0 48 48">
-                <path d="M24 0C10.745 0 0 10.745 0 24c0 4.243 1.101 8.229 3.029 11.686L.999 47.001l11.583-2.966C15.927 46.13 19.818 47 24 47c13.255 0 24-10.745 24-24S37.255 0 24 0zm11.152 33.684c-.488 1.372-2.884 2.516-3.972 2.684-1.026.159-2.325.228-3.752-.236-1.043-.339-2.38-.791-4.086-1.548-7.146-3.169-11.813-10.412-12.177-10.89-.363-.477-2.96-3.938-2.96-7.514 0-3.576 1.872-5.334 2.537-6.062.665-.728 1.454-.91 1.939-.91.485 0 .97.004 1.394.025.447.021.98-.017 1.533 1.169.555 1.186 1.896 4.623 2.06 4.962.164.339.273.733.055 1.182-.219.449-.328.728-.655 1.127-.328.399-.689.891-1.182 1.378.493.913 1.551 2.503 3.431 4.051 2.407 1.984 4.435 2.602 5.063 2.896.628.294 1.01.246 1.377-.145.368-.391 1.579-1.857 2.002-2.495.424-.637.848-.531 1.428-.318.581.213 3.689 1.74 4.323 2.056.635.316 1.06.474 1.214.745.155.271.155 1.539-.333 2.911z"/>
-            </svg>
-        </div>
-        
-        <h1>Fale Conosco</h1>
-        <p>Preencha os dados abaixo para continuar no WhatsApp</p>
-        
-        <form id="whatsappForm">
-            <div class="form-group">
-                <label for="nome">Nome completo</label>
-                <input type="text" id="nome" name="nome" required placeholder="Digite seu nome">
-                <div class="error" id="nomeError">Por favor, digite seu nome</div>
-            </div>
-            
-            <div class="form-group">
-                <label for="telefone">Telefone/WhatsApp</label>
-                <input type="tel" id="telefone" name="telefone" required placeholder="(00) 00000-0000">
-                <div class="error" id="telefoneError">Por favor, digite um telefone válido</div>
-            </div>
-            
-            <button type="submit" id="submitBtn">
-                <span id="btnText">Continuar no WhatsApp</span>
-                <div class="loading" id="loading"></div>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="whatsappIcon">
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                </svg>
-            </button>
-        </form>
-    </div>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://gtm-server-side-render.onrender.com/ns.html?id=GTM-MZT4DCTR"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-    <script>
-        // Inicializar dataLayer
-        window.dataLayer = window.dataLayer || [];
-        
-        // CONFIGURAÇÕES - ALTERE AQUI
-        const CONFIG = {
-            // Cole aqui a URL do seu Google Apps Script
-            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyrFlU25VeJAC8Zm_tDQdJxjMntAUfKnz7qJJqpgrnkMSeKqFrhIDDBS15a5aOPHAQJ/exec',
-            
-            // Cole aqui o número do WhatsApp (apenas números, com DDI e DDD)
-            // Exemplo: 5511999999999
-            WHATSAPP_NUMBER: '554792586911',
-            
-            // Mensagem que será enviada no WhatsApp
-            WHATSAPP_MESSAGE: 'Olá! Adorei o conteúdo e gostaria de mais informações.'
-        };
+  <div class="wrapper">
+    <img src="logo.jpg" alt="Logo Luzavih" class="logo" />
 
-        // Função para formatar telefone
-        function formatPhone(value) {
-            value = value.replace(/\D/g, '');
-            if (value.length <= 10) {
-                value = value.replace(/(\d{2})(\d)/, '($1) $2');
-                value = value.replace(/(\d{4})(\d)/, '$1-$2');
-            } else {
-                value = value.replace(/(\d{2})(\d)/, '($1) $2');
-                value = value.replace(/(\d{5})(\d)/, '$1-$2');
-            }
-            return value;
-        }
+    <h1>Luzavih</h1>
+    <p class="desc">
+      Fabricação própria.<br>
+      Peças que vestem luz & propósito.<br>
+      Entre em contato 🌿
+    </p>
 
-        // Aplicar formatação no campo telefone
-        document.getElementById('telefone').addEventListener('input', function(e) {
-            e.target.value = formatPhone(e.target.value);
+    <form id="whatsappForm">
+      <div class="form-group">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" required placeholder="Digite seu nome" />
+        <div class="error" id="nomeError">Por favor, digite seu nome completo.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="telefone">Telefone / WhatsApp</label>
+        <input type="tel" id="telefone" name="telefone" required placeholder="(00) 00000-0000" />
+        <div class="error" id="telefoneError">Por favor, digite um telefone válido.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="tipo">Você é:</label>
+        <select id="tipo" name="tipo" required>
+          <option value="">Selecione uma opção</option>
+          <option value="atacado">Lojista / Atacado</option>
+          <option value="varejo">Cliente final / Varejo</option>
+        </select>
+        <div class="error" id="tipoError">Por favor, selecione uma opção.</div>
+      </div>
+
+      <button type="submit" id="submitBtn">
+        <span id="btnText">Continuar no WhatsApp</span>
+        <div class="loading" id="loading"></div>
+        <svg id="whatsappIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7
+                   8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8
+                   8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1
+                   8 8v.5z" />
+          <path d="M16 12.5c-.25-.12-1.47-.72-1.7-.8-.22-.08-.38-.12-.55.12-.16.25-.63.8-.77.96-.14.16-.29.18-.54.06-.25-.12-1.05-.39-2-1.25-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.01-.38.11-.5.12-.12.25-.29.37-.43.12-.14.16-.25.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.76-1.81-.2-.48-.4-.42-.55-.43l-.47-.01c-.16 0-.41.06-.63.29-.22.22-.83.81-.83 1.98 0 1.17.85 2.3.97 2.46.12.16 1.67 2.55 4.04 3.58.56.24.99.38 1.33.49.56.18 1.07.15 1.47.09.45-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.22-.16-.47-.28z" />
+        </svg>
+      </button>
+    </form>
+
+    <footer>© 2025 Luzavih</footer>
+  </div>
+
+  <script>
+    // Inicializar dataLayer
+    window.dataLayer = window.dataLayer || [];
+
+    // CONFIGURAÇÕES
+    const CONFIG = {
+      GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyrFlU25VeJAC8Zm_tDQdJxjMntAUfKnz7qJJqpgrnkMSeKqFrhIDDBS15a5aOPHAQJ/exec',
+      WHATSAPP_ATACADO: '5547992586911',
+      WHATSAPP_VAREJO: '5547992126929',
+      WHATSAPP_MESSAGE: 'Olá! Adorei o conteúdo e gostaria de mais informações.'
+    };
+
+    // Formatar telefone
+    function formatPhone(value) {
+      value = value.replace(/\D/g, '');
+      if (value.length <= 10) {
+        value = value.replace(/(\d{2})(\d)/, '($1) $2');
+        value = value.replace(/(\d{4})(\d)/, '$1-$2');
+      } else {
+        value = value.replace(/(\d{2})(\d)/, '($1) $2');
+        value = value.replace(/(\d{5})(\d)/, '$1-$2');
+      }
+      return value;
+    }
+
+    document.getElementById('telefone').addEventListener('input', function(e) {
+      e.target.value = formatPhone(e.target.value);
+    });
+
+    // FBCLID
+    function getFBCLID() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('fbclid') || '';
+    }
+
+    function getFBC() {
+      const fbclid = getFBCLID();
+      if (fbclid) {
+        return 'fb.1.' + Date.now() + '.' + fbclid;
+      }
+      return '';
+    }
+
+    function getFBP() {
+      const match = document.cookie.match(/_fbp=([^;]+)/);
+      return match ? match[1] : '';
+    }
+
+    // Page view para GTM
+    window.dataLayer.push({
+      event: 'page_view',
+      page_title: document.title,
+      page_location: window.location.href
+    });
+
+    // Validação simples
+    function validateForm(nome, telefone, tipo) {
+      let isValid = true;
+
+      if (nome.trim().length < 3) {
+        document.getElementById('nomeError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('nomeError').style.display = 'none';
+      }
+
+      const telefoneNumeros = telefone.replace(/\D/g, '');
+      if (telefoneNumeros.length < 10) {
+        document.getElementById('telefoneError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('telefoneError').style.display = 'none';
+      }
+
+      if (!tipo) {
+        document.getElementById('tipoError').style.display = 'block';
+        isValid = false;
+      } else {
+        document.getElementById('tipoError').style.display = 'none';
+      }
+
+      return isValid;
+    }
+
+    // Enviar dados para Google Sheets
+    async function sendToGoogleSheets(data) {
+      try {
+        await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
         });
+        return true; // no-cors: assumimos sucesso
+      } catch (error) {
+        console.error('Erro ao enviar dados:', error);
+        return true;
+      }
+    }
 
-        // Capturar FBCLID da URL
-        function getFBCLID() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('fbclid') || '';
-        }
-        
-        // Capturar FBC (Facebook Click ID cookie)
-        function getFBC() {
-            const fbclid = getFBCLID();
-            if (fbclid) {
-                return 'fb.1.' + Date.now() + '.' + fbclid;
-            }
-            return '';
-        }
-        
-        // Capturar FBP (Facebook Browser ID cookie)
-        function getFBP() {
-            const match = document.cookie.match(/_fbp=([^;]+)/);
-            return match ? match[1] : '';
-        }
+    function getWhatsappNumber(tipo) {
+      if (tipo === 'atacado') return CONFIG.WHATSAPP_ATACADO;
+      return CONFIG.WHATSAPP_VAREJO;
+    }
 
-        // Enviar evento PageView para GTM
-        window.dataLayer.push({
-            'event': 'page_view',
-            'page_title': document.title,
-            'page_location': window.location.href
-        });
+    function redirectToWhatsApp(tipo) {
+      const message = encodeURIComponent(CONFIG.WHATSAPP_MESSAGE);
+      const number = getWhatsappNumber(tipo);
+      const whatsappURL = `https://wa.me/${number}?text=${message}`;
+      window.location.href = whatsappURL;
+    }
 
-        // Validar formulário
-        function validateForm(nome, telefone) {
-            let isValid = true;
-            
-            if (nome.trim().length < 3) {
-                document.getElementById('nomeError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('nomeError').style.display = 'none';
-            }
-            
-            const telefoneNumeros = telefone.replace(/\D/g, '');
-            if (telefoneNumeros.length < 10) {
-                document.getElementById('telefoneError').style.display = 'block';
-                isValid = false;
-            } else {
-                document.getElementById('telefoneError').style.display = 'none';
-            }
-            
-            return isValid;
-        }
+    document.getElementById('whatsappForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
 
-        // Enviar dados para Google Sheets
-        async function sendToGoogleSheets(data) {
-            try {
-                const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                // No-cors não permite ler a resposta, então assumimos sucesso
-                return true;
-            } catch (error) {
-                console.error('Erro ao enviar dados:', error);
-                // Mesmo com erro, continuamos para o WhatsApp
-                return true;
-            }
-        }
+      const nome = document.getElementById('nome').value;
+      const telefone = document.getElementById('telefone').value;
+      const tipo = document.getElementById('tipo').value;
+      const fbclid = getFBCLID();
 
-        // Redirecionar para WhatsApp
-        function redirectToWhatsApp() {
-            const message = encodeURIComponent(CONFIG.WHATSAPP_MESSAGE);
-            const whatsappURL = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${message}`;
-            window.location.href = whatsappURL;
-        }
+      if (!validateForm(nome, telefone, tipo)) {
+        return;
+      }
 
-        // Manipular envio do formulário
-        document.getElementById('whatsappForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const nome = document.getElementById('nome').value;
-            const telefone = document.getElementById('telefone').value;
-            const fbclid = getFBCLID();
-            
-            if (!validateForm(nome, telefone)) {
-                return;
-            }
-            
-            // Mostrar loading
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const loading = document.getElementById('loading');
-            const whatsappIcon = document.getElementById('whatsappIcon');
-            
-            submitBtn.disabled = true;
-            btnText.textContent = 'Enviando...';
-            loading.style.display = 'block';
-            whatsappIcon.style.display = 'none';
-            
-            // Enviar para Google Sheets
-            const data = {
-                nome: nome,
-                telefone: telefone,
-                fbclid: fbclid
-            };
-            
-            await sendToGoogleSheets(data);
-            
-            // Gerar Event ID único para deduplicação
-            const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            
-            // Enviar evento de conversão para GTM
-            window.dataLayer.push({
-                'event': 'lead_form_submit',
-                'event_id': eventId,
-                'user_data': {
-                    'email_address': '', // Não temos email
-                    'phone_number': telefone.replace(/\D/g, ''),
-                    'address': {
-                        'first_name': nome.split(' ')[0],
-                        'last_name': nome.split(' ').slice(1).join(' ')
-                    }
-                },
-                'fbclid': fbclid,
-                'fbc': getFBC(),
-                'fbp': getFBP(),
-                'lead_name': nome,
-                'lead_phone': telefone
-            });
-            
-            // Aguardar 500ms e redirecionar
-            setTimeout(() => {
-                redirectToWhatsApp();
-            }, 500);
-        });
-    </script>
+      // UI loading
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const loading = document.getElementById('loading');
+      const whatsappIcon = document.getElementById('whatsappIcon');
+
+      submitBtn.disabled = true;
+      btnText.textContent = 'Enviando...';
+      loading.style.display = 'block';
+      whatsappIcon.style.display = 'none';
+
+      // Enviar para Google Sheets (nome, telefone, fbclid, tipo)
+      const data = {
+        nome: nome,
+        telefone: telefone,
+        tipo: tipo,
+        fbclid: fbclid
+      };
+
+      await sendToGoogleSheets(data);
+
+      // Event ID para deduplicação
+      const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+      // Definir eventos diferentes para Atacado / Varejo
+      const isAtacado = (tipo === 'atacado');
+      const gtmEvent = isAtacado ? 'lead_atacado_submit' : 'lead_varejo_submit';
+      const fbEventName = isAtacado ? 'LeadAtacado' : 'LeadVarejo';
+
+      // Push para dataLayer (GTM Web → GTM Server → Facebook CAPI)
+      window.dataLayer.push({
+        event: gtmEvent,
+        event_id: eventId,
+        event_name: fbEventName,
+        lead_type: tipo,
+        user_data: {
+          email_address: '',
+          phone_number: telefone.replace(/\D/g, ''),
+          address: {
+            first_name: nome.split(' ')[0],
+            last_name: nome.split(' ').slice(1).join(' ')
+          }
+        },
+        fbclid: fbclid,
+        fbc: getFBC(),
+        fbp: getFBP(),
+        lead_name: nome,
+        lead_phone: telefone
+      });
+
+      setTimeout(() => {
+        redirectToWhatsApp(tipo);
+      }, 500);
+    });
+
+    // Animação de fade-in leve
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.style.opacity = 0;
+      document.body.style.transition = "opacity 0.6s ease";
+      setTimeout(() => (document.body.style.opacity = 1), 50);
+    });
+  </script>
 </body>
 </html>
