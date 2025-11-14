@@ -362,6 +362,19 @@
       window.location.href = whatsappURL;
     }
 
+    function getUTMs() {
+      const params = new URLSearchParams(window.location.search);
+    
+      return {
+        utm_source: params.get("utm_source") || "",
+        utm_medium: params.get("utm_medium") || "",
+        utm_campaign: params.get("utm_campaign") || "",
+        utm_id: params.get("utm_id") || "",
+        utm_content: params.get("utm_content") || "",
+        utm_term: params.get("utm_term") || ""
+      };
+    }
+    
     document.getElementById('whatsappForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -386,11 +399,14 @@
       const normalizedPhone = normalizePhone(telefoneOriginal);
 
       // Envia ao Google Sheets
+      const utms = getUTMs();
+
       await sendToGoogleSheets({
         nome: nome,
         telefone: normalizedPhone,
         tipo: tipo,
-        fbclid: getFBCLID()
+        fbclid: getFBCLID(),
+        ...utms
       });
 
       const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
