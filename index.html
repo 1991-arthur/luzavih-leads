@@ -398,9 +398,39 @@
       // Telefone padronizado
       const normalizedPhone = normalizePhone(telefoneOriginal);
 
+      // Get UTMs
+      function getUTMs() {
+        const params = new URLSearchParams(window.location.search);
+      
+        // Lista de UTM parâmetros que queremos coletar
+        const utmKeys = [
+          "utm_source",
+          "utm_medium",
+          "utm_campaign",
+          "utm_id",
+          "utm_content",
+          "utm_term"
+        ];
+      
+        let utms = {};
+      
+        utmKeys.forEach(key => {
+          const valueFromURL = params.get(key);
+      
+          if (valueFromURL) {
+            // Salva no sessionStorage
+            sessionStorage.setItem(key, valueFromURL);
+            utms[key] = valueFromURL;
+          } else {
+            // Se não vier da URL, tenta usar o que já estava salvo
+            utms[key] = sessionStorage.getItem(key) || "";
+          }
+        });
+      
+        return utms;
+      }      
+      
       // Envia ao Google Sheets
-      const utms = getUTMs();
-
       await sendToGoogleSheets({
         nome: nome,
         telefone: normalizedPhone,
