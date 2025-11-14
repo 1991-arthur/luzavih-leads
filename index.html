@@ -168,20 +168,6 @@
       transform: none;
     }
 
-    .loading {
-      display: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.4);
-      border-top-color: #fff;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
     footer {
       font-size: 0.78rem;
       color: #999;
@@ -191,12 +177,11 @@
   </style>
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
+
   <noscript>
     <iframe src="https://gtm-server-side-render.onrender.com/ns.html?id=GTM-MZT4DCTR"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
-  <!-- End Google Tag Manager (noscript) -->
 
   <div class="wrapper">
     <img src="logo.jpg" alt="Logo Luzavih" class="logo" />
@@ -211,19 +196,19 @@
     <form id="whatsappForm">
       <div class="form-group">
         <label for="nome">Nome completo</label>
-        <input type="text" id="nome" name="nome" required placeholder="Digite seu nome" />
+        <input type="text" id="nome" required placeholder="Digite seu nome" />
         <div class="error" id="nomeError">Por favor, digite seu nome completo.</div>
       </div>
 
       <div class="form-group">
         <label for="telefone">Telefone / WhatsApp</label>
-        <input type="tel" id="telefone" name="telefone" required placeholder="(00) 00000-0000" />
+        <input type="tel" id="telefone" required placeholder="(00) 00000-0000" />
         <div class="error" id="telefoneError">Por favor, digite um telefone válido.</div>
       </div>
 
       <div class="form-group">
         <label for="tipo">Você é:</label>
-        <select id="tipo" name="tipo" required>
+        <select id="tipo" required>
           <option value="">Selecione uma opção</option>
           <option value="atacado">Lojista / Atacado</option>
           <option value="varejo">Cliente final / Varejo</option>
@@ -233,7 +218,6 @@
 
       <button type="submit" id="submitBtn">
         <span id="btnText">Continuar no WhatsApp</span>
-        <div class="loading" id="loading"></div>
         <svg id="whatsappIcon" width="20" height="20" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7
@@ -249,10 +233,8 @@
   </div>
 
   <script>
-    // Inicializar dataLayer
     window.dataLayer = window.dataLayer || [];
 
-    // CONFIGURAÇÕES
     const CONFIG = {
       GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyrFlU25VeJAC8Zm_tDQdJxjMntAUfKnz7qJJqpgrnkMSeKqFrhIDDBS15a5aOPHAQJ/exec',
       WHATSAPP_ATACADO: '5547992586911',
@@ -260,7 +242,6 @@
       WHATSAPP_MESSAGE: 'Olá! Adorei o conteúdo e gostaria de mais informações.'
     };
 
-    // Formatar telefone
     function formatPhone(value) {
       value = value.replace(/\D/g, '');
       if (value.length <= 10) {
@@ -277,7 +258,23 @@
       e.target.value = formatPhone(e.target.value);
     });
 
-    // FBCLID
+    // -----------------------------
+    // NOVA FUNÇÃO DE PADRONIZAÇÃO
+    // -----------------------------
+    function normalizePhone(raw) {
+      let phone = raw.replace(/\D/g, '');
+
+      // Remove zeros à esquerda
+      phone = phone.replace(/^0+/, '');
+
+      // Se tiver 10 ou 11 dígitos → presume Brasil
+      if (phone.length === 10 || phone.length === 11) {
+        phone = '55' + phone;
+      }
+
+      return phone;
+    }
+
     function getFBCLID() {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get('fbclid') || '';
@@ -285,9 +282,7 @@
 
     function getFBC() {
       const fbclid = getFBCLID();
-      if (fbclid) {
-        return 'fb.1.' + Date.now() + '.' + fbclid;
-      }
+      if (fbclid) return 'fb.1.' + Date.now() + '.' + fbclid;
       return '';
     }
 
@@ -296,14 +291,12 @@
       return match ? match[1] : '';
     }
 
-    // Page view para GTM
     window.dataLayer.push({
       event: 'page_view',
       page_title: document.title,
       page_location: window.location.href
     });
 
-    // Validação simples
     function validateForm(nome, telefone, tipo) {
       let isValid = true;
 
@@ -332,7 +325,6 @@
       return isValid;
     }
 
-    // Enviar dados para Google Sheets
     async function sendToGoogleSheets(data) {
       try {
         await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
@@ -343,16 +335,13 @@
           },
           body: JSON.stringify(data)
         });
-        return true; // no-cors: assumimos sucesso
       } catch (error) {
         console.error('Erro ao enviar dados:', error);
-        return true;
       }
     }
 
     function getWhatsappNumber(tipo) {
-      if (tipo === 'atacado') return CONFIG.WHATSAPP_ATACADO;
-      return CONFIG.WHATSAPP_VAREJO;
+      return tipo === 'atacado' ? CONFIG.WHATSAPP_ATACADO : CONFIG.WHATSAPP_VAREJO;
     }
 
     function redirectToWhatsApp(tipo) {
@@ -366,75 +355,54 @@
       e.preventDefault();
 
       const nome = document.getElementById('nome').value;
-      const telefone = document.getElementById('telefone').value;
+      const telefoneOriginal = document.getElementById('telefone').value;
       const tipo = document.getElementById('tipo').value;
-      const fbclid = getFBCLID();
 
-      if (!validateForm(nome, telefone, tipo)) {
-        return;
-      }
+      if (!validateForm(nome, telefoneOriginal, tipo)) return;
 
-      // UI loading
-      const submitBtn = document.getElementById('submitBtn');
-      const btnText = document.getElementById('btnText');
-      const loading = document.getElementById('loading');
-      const whatsappIcon = document.getElementById('whatsappIcon');
+      // Padroniza telefone
+      const normalizedPhone = normalizePhone(telefoneOriginal);
 
-      submitBtn.disabled = true;
-      btnText.textContent = 'Enviando...';
-      loading.style.display = 'block';
-      whatsappIcon.style.display = 'none';
-
-      // Enviar para Google Sheets (nome, telefone, fbclid, tipo)
+      // Envia para Google Sheets (agora padronizado!)
       const data = {
         nome: nome,
-        telefone: telefone,
+        telefone: normalizedPhone,
         tipo: tipo,
-        fbclid: fbclid
+        fbclid: getFBCLID()
       };
 
       await sendToGoogleSheets(data);
 
-      // Event ID para deduplicação
       const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
-      // Definir eventos diferentes para Atacado / Varejo
-      const isAtacado = (tipo === 'atacado');
-      const gtmEvent = isAtacado ? 'lead_atacado_submit' : 'lead_varejo_submit';
-      const fbEventName = isAtacado ? 'LeadAtacado' : 'LeadVarejo';
-
-      // Push para dataLayer (GTM Web → GTM Server → Facebook CAPI)
       window.dataLayer.push({
-        event: gtmEvent,
+        event: tipo === 'atacado' ? 'lead_atacado_submit' : 'lead_varejo_submit',
         event_id: eventId,
-        event_name: fbEventName,
+        event_name: tipo === 'atacado' ? 'LeadAtacado' : 'LeadVarejo',
         lead_type: tipo,
         user_data: {
-          email_address: '',
-          phone_number: telefone.replace(/\D/g, ''),
+          phone_number: normalizedPhone,
           address: {
             first_name: nome.split(' ')[0],
             last_name: nome.split(' ').slice(1).join(' ')
           }
         },
-        fbclid: fbclid,
+        fbclid: getFBCLID(),
         fbc: getFBC(),
         fbp: getFBP(),
         lead_name: nome,
-        lead_phone: telefone
+        lead_phone: normalizedPhone
       });
 
-      setTimeout(() => {
-        redirectToWhatsApp(tipo);
-      }, 500);
+      redirectToWhatsApp(tipo);
     });
 
-    // Animação de fade-in leve
     document.addEventListener("DOMContentLoaded", () => {
       document.body.style.opacity = 0;
       document.body.style.transition = "opacity 0.6s ease";
       setTimeout(() => (document.body.style.opacity = 1), 50);
     });
   </script>
+
 </body>
 </html>
