@@ -249,160 +249,65 @@
   </div>
 
   <script>
-    window.dataLayer = window.dataLayer || [];
-
-    const CONFIG = {
-      GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyrFlU25VeJAC8Zm_tDQdJxjMntAUfKnz7qJJqpgrnkMSeKqFrhIDDBS15a5aOPHAQJ/exec',
-      WHATSAPP_ATACADO: '5547992586911',
-      WHATSAPP_VAREJO: '5547992126929',
-      WHATSAPP_MESSAGE: 'Olá! Adorei o conteúdo e gostaria de mais informações.'
-    };
-
-    function formatPhone(value) {
-      value = value.replace(/\D/g, '');
-      if (value.length <= 10) {
-        value = value.replace(/(\d{2})(\d)/, '($1) $2');
-        value = value.replace(/(\d{4})(\d)/, '$1-$2');
-      } else {
-        value = value.replace(/(\d{2})(\d)/, '($1) $2');
-        value = value.replace(/(\d{5})(\d)/, '$1-$2');
-      }
-      return value;
-    }
-
-    document.getElementById('telefone').addEventListener('input', function(e) {
-      e.target.value = formatPhone(e.target.value);
-    });
-
-    // Função de padronização de telefone (E.164)
-    function normalizePhone(raw) {
-      let phone = raw.replace(/\D/g, '');
-      phone = phone.replace(/^0+/, '');
-
-      if (phone.length === 10 || phone.length === 11) {
-        phone = '55' + phone;
-      }
-
-      return phone;
-    }
-
-    function getFBCLID() {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('fbclid') || '';
-    }
-
-    function getFBC() {
-      const fbclid = getFBCLID();
-      if (fbclid) return 'fb.1.' + Date.now() + '.' + fbclid;
-      return '';
-    }
-
-    function getFBP() {
-      const match = document.cookie.match(/_fbp=([^;]+)/);
-      return match ? match[1] : '';
-    }
-
-    window.dataLayer.push({
-      event: 'page_view',
-      page_title: document.title,
-      page_location: window.location.href
-    });
-
-    function validateForm(nome, telefone, tipo) {
-      let isValid = true;
-
-      if (nome.trim().length < 3) {
-        document.getElementById('nomeError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('nomeError').style.display = 'none';
-      }
-
-      const telefoneNumeros = telefone.replace(/\D/g, '');
-      if (telefoneNumeros.length < 10) {
-        document.getElementById('telefoneError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('telefoneError').style.display = 'none';
-      }
-
-      if (!tipo) {
-        document.getElementById('tipoError').style.display = 'block';
-        isValid = false;
-      } else {
-        document.getElementById('tipoError').style.display = 'none';
-      }
-
-      return isValid;
-    }
-
-    async function sendToGoogleSheets(data) {
-      try {
-        await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data)
-        });
-      } catch (error) {
-        console.error('Erro ao enviar dados:', error);
-      }
-    }
-
-    function getWhatsappNumber(tipo) {
-      return tipo === 'atacado' ? CONFIG.WHATSAPP_ATACADO : CONFIG.WHATSAPP_VAREJO;
-    }
-
-    function redirectToWhatsApp(tipo) {
-      const message = encodeURIComponent(CONFIG.WHATSAPP_MESSAGE);
-      const number = getWhatsappNumber(tipo);
-      const whatsappURL = `https://wa.me/${number}?text=${message}`;
-      window.location.href = whatsappURL;
-    }
-
-    function getUTMs() {
-      const params = new URLSearchParams(window.location.search);
-    
-      return {
-        utm_source: params.get("utm_source") || "",
-        utm_medium: params.get("utm_medium") || "",
-        utm_campaign: params.get("utm_campaign") || "",
-        utm_id: params.get("utm_id") || "",
-        utm_content: params.get("utm_content") || "",
-        utm_term: params.get("utm_term") || ""
+      window.dataLayer = window.dataLayer || [];
+  
+      const CONFIG = {
+        GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyrFlU25VeJAC8Zm_tDQdJxjMntAUfKnz7qJJqpgrnkMSeKqFrhIDDBS15a5aOPHAQJ/exec',
+        WHATSAPP_ATACADO: '5547992586911',
+        WHATSAPP_VAREJO: '5547992126929',
+        WHATSAPP_MESSAGE: 'Olá! Adorei o conteúdo e gostaria de mais informações.'
       };
-    }
-    
-    document.getElementById('whatsappForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const nome = document.getElementById('nome').value;
-      const telefoneOriginal = document.getElementById('telefone').value;
-      const tipo = document.getElementById('tipo').value;
-
-      if (!validateForm(nome, telefoneOriginal, tipo)) return;
-
-      // Ativa spinner
-      const submitBtn = document.getElementById('submitBtn');
-      const btnText = document.getElementById('btnText');
-      const loading = document.getElementById('loading');
-      const whatsappIcon = document.getElementById('whatsappIcon');
-
-      submitBtn.disabled = true;
-      btnText.textContent = 'Enviando...';
-      loading.style.display = 'block';
-      whatsappIcon.style.display = 'none';
-
-      // Telefone padronizado
-      const normalizedPhone = normalizePhone(telefoneOriginal);
-
-      // Get UTMs
+  
+      function formatPhone(value) {
+        value = value.replace(/\D/g, '');
+        if (value.length <= 10) {
+          value = value.replace(/(\d{2})(\d)/, '($1) $2');
+          value = value.replace(/(\d{4})(\d)/, '$1-$2');
+        } else {
+          value = value.replace(/(\d{2})(\d)/, '($1) $2');
+          value = value.replace(/(\d{5})(\d)/, '$1-$2');
+        }
+        return value;
+      }
+  
+      document.getElementById('telefone').addEventListener('input', function(e) {
+        e.target.value = formatPhone(e.target.value);
+      });
+  
+      // Função de padronização de telefone (E.164)
+      function normalizePhone(raw) {
+        let phone = raw.replace(/\D/g, '');
+        phone = phone.replace(/^0+/, '');
+  
+        if (phone.length === 10 || phone.length === 11) {
+          phone = '55' + phone;
+        }
+  
+        return phone;
+      }
+  
+      function getFBCLID() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('fbclid') || '';
+      }
+  
+      function getFBC() {
+        const fbclid = getFBCLID();
+        if (fbclid) return 'fb.1.' + Date.now() + '.' + fbclid;
+        return '';
+      }
+  
+      function getFBP() {
+        const match = document.cookie.match(/_fbp=([^;]+)/);
+        return match ? match[1] : '';
+      }
+  
+      // ------------------------------
+      // FUNÇÃO FINAL CORRETA DE UTMs
+      // ------------------------------
       function getUTMs() {
         const params = new URLSearchParams(window.location.search);
-      
-        // Lista de UTM parâmetros que queremos coletar
+  
         const utmKeys = [
           "utm_source",
           "utm_medium",
@@ -411,66 +316,149 @@
           "utm_content",
           "utm_term"
         ];
-      
+  
         let utms = {};
-      
+  
         utmKeys.forEach(key => {
           const valueFromURL = params.get(key);
-      
+  
           if (valueFromURL) {
-            // Salva no sessionStorage
             sessionStorage.setItem(key, valueFromURL);
             utms[key] = valueFromURL;
           } else {
-            // Se não vier da URL, tenta usar o que já estava salvo
             utms[key] = sessionStorage.getItem(key) || "";
           }
         });
-      
+  
         return utms;
-      }      
-      
-      // Envia ao Google Sheets
-      await sendToGoogleSheets({
-        nome: nome,
-        telefone: normalizedPhone,
-        tipo: tipo,
-        fbclid: getFBCLID(),
-        ...utms
-      });
-
-      const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-
+      }
+  
       window.dataLayer.push({
-        event: tipo === 'atacado' ? 'lead_atacado_submit' : 'lead_varejo_submit',
-        event_id: eventId,
-        event_name: tipo === 'atacado' ? 'LeadAtacado' : 'LeadVarejo',
-        lead_type: tipo,
-        user_data: {
-          phone_number: normalizedPhone,
-          address: {
-            first_name: nome.split(' ')[0],
-            last_name: nome.split(' ').slice(1).join(' ')
-          }
-        },
-        fbclid: getFBCLID(),
-        fbc: getFBC(),
-        fbp: getFBP(),
-        lead_name: nome,
-        lead_phone: normalizedPhone
+        event: 'page_view',
+        page_title: document.title,
+        page_location: window.location.href
       });
-
-      setTimeout(() => {
-        redirectToWhatsApp(tipo);
-      }, 500);
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.body.style.opacity = 0;
-      document.body.style.transition = "opacity 0.6s ease";
-      setTimeout(() => (document.body.style.opacity = 1), 50);
-    });
+  
+      function validateForm(nome, telefone, tipo) {
+        let isValid = true;
+  
+        if (nome.trim().length < 3) {
+          document.getElementById('nomeError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('nomeError').style.display = 'none';
+        }
+  
+        const telefoneNumeros = telefone.replace(/\D/g, '');
+        if (telefoneNumeros.length < 10) {
+          document.getElementById('telefoneError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('telefoneError').style.display = 'none';
+        }
+  
+        if (!tipo) {
+          document.getElementById('tipoError').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('tipoError').style.display = 'none';
+        }
+  
+        return isValid;
+      }
+  
+      async function sendToGoogleSheets(data) {
+        try {
+          await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+        } catch (error) {
+          console.error('Erro ao enviar dados:', error);
+        }
+      }
+  
+      function getWhatsappNumber(tipo) {
+        return tipo === 'atacado' ? CONFIG.WHATSAPP_ATACADO : CONFIG.WHATSAPP_VAREJO;
+      }
+  
+      function redirectToWhatsApp(tipo) {
+        const message = encodeURIComponent(CONFIG.WHATSAPP_MESSAGE);
+        const number = getWhatsappNumber(tipo);
+        const whatsappURL = `https://wa.me/${number}?text=${message}`;
+        window.location.href = whatsappURL;
+      }
+  
+      document.getElementById('whatsappForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+  
+        const nome = document.getElementById('nome').value;
+        const telefoneOriginal = document.getElementById('telefone').value;
+        const tipo = document.getElementById('tipo').value;
+  
+        if (!validateForm(nome, telefoneOriginal, tipo)) return;
+  
+        // Ativa spinner
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const loading = document.getElementById('loading');
+        const whatsappIcon = document.getElementById('whatsappIcon');
+  
+        submitBtn.disabled = true;
+        btnText.textContent = 'Enviando...';
+        loading.style.display = 'block';
+        whatsappIcon.style.display = 'none';
+  
+        const normalizedPhone = normalizePhone(telefoneOriginal);
+  
+        // ✔ CORREÇÃO AQUI ↓↓↓
+        const utms = getUTMs();
+  
+        // Envia ao Google Sheets
+        await sendToGoogleSheets({
+          nome: nome,
+          telefone: normalizedPhone,
+          tipo: tipo,
+          fbclid: getFBCLID(),
+          ...utms
+        });
+  
+        const eventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  
+        window.dataLayer.push({
+          event: tipo === 'atacado' ? 'lead_atacado_submit' : 'lead_varejo_submit',
+          event_id: eventId,
+          event_name: tipo === 'atacado' ? 'LeadAtacado' : 'LeadVarejo',
+          lead_type: tipo,
+          user_data: {
+            phone_number: normalizedPhone,
+            address: {
+              first_name: nome.split(' ')[0],
+              last_name: nome.split(' ').slice(1).join(' ')
+            }
+          },
+          fbclid: getFBCLID(),
+          fbc: getFBC(),
+          fbp: getFBP(),
+          lead_name: nome,
+          lead_phone: normalizedPhone
+        });
+  
+        setTimeout(() => {
+          redirectToWhatsApp(tipo);
+        }, 500);
+      });
+  
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.opacity = 0;
+        document.body.style.transition = "opacity 0.6s ease";
+        setTimeout(() => (document.body.style.opacity = 1), 50);
+      });
   </script>
-
+  
 </body>
 </html>
