@@ -423,7 +423,8 @@
           nome: nome,
           telefone: normalizedPhone,
           tipo: tipo,
-          fbclid: getFBCLID(),
+          fbc: getFBC(),
+          fbp: getFBP(),
           ...utms
         });
   
@@ -441,7 +442,6 @@
               last_name: nome.split(' ').slice(1).join(' ')
             }
           },
-          fbclid: getFBCLID(),
           fbc: getFBC(),
           fbp: getFBP(),
           lead_name: nome,
